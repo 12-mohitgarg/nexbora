@@ -1,1 +1,3 @@
+/api/payment/order /.netlify/functions/payment-order 200
+/api/payment/verify /.netlify/functions/payment-verify 200
 /* /index.html 200
