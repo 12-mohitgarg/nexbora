@@ -1,11 +1,11 @@
-import Razorpay from 'razorpay';
+const Razorpay = require('razorpay');
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID || 'rzp_live_SoVxB05ogtK0Fl',
   key_secret: process.env.RAZORPAY_KEY_SECRET || '23a2eaU3UwRf4LnZaBWVvpvr',
 });
 
-export const handler = async (event: any) => {
+exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
