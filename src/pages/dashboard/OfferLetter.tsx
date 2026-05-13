@@ -48,6 +48,16 @@ export default function OfferLetter() {
     const deptSemester = `${profile?.department || 'B.A.(Pol. Sci.)'} - ${profile?.semester || '5th Semester'}`;
     const domain = profile?.internshipDomain || '[Domain as per Subject / Interest]';
 
+    const formatDate = (iso: string | undefined) => {
+      if (!iso) return '........./........./2026';
+      const d = new Date(iso);
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    };
+    const letterDate = formatDate(profile?.registrationDate);
+
     // ── IMAGE DIMENSIONS ──────────────────────────────────────────
     const headerH = (252 / 998) * W; // 52.97mm
     const footerH = (322 / 1002) * W; // 67.44mm
@@ -66,7 +76,7 @@ export default function OfferLetter() {
     doc.setFont('Helvetica', 'bold');
     doc.text('IM/2026/IOL/10000', x + doc.getTextWidth('Letter Ref. No.: '), y);
     doc.setFont('Helvetica', 'normal');
-    doc.text('Date: ....../......./2026', W - ML, y, { align: 'right' });
+    doc.text(`Date: ${letterDate}`, W - ML, y, { align: 'right' });
     y += 9;
 
     // To section
@@ -105,8 +115,8 @@ export default function OfferLetter() {
       ['Internship Domain', `[${domain}]`],
       ['Internship Duration', '120 Hours'],
       ['Mode of Internship', 'Online (as approved by College)'],
-      ['Internship Start Date', '[DD/MM/YYYY]'],
-      ['Expected End Date', '[DD/MM/YYYY]'],
+      ['Internship Start Date', '01/06/2026'],
+      ['Expected End Date', '20/06/2026'],
       ['Stipend', 'Not Applicable \u2014 Academic Programme'],
     ];
     rows.forEach(([label, value]) => {
