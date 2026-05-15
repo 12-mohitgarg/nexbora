@@ -217,6 +217,13 @@ export default function Register() {
               {step === 2 && (
                 <div className="grid grid-cols-1 gap-6">
                   <div className="space-y-2">
+                    <Label htmlFor="university" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">University</Label>
+                    <select name="university" value={formData.university} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
+                      <option value="">Select University</option>
+                      {UNIVERSITIES.map(u => <option key={u} value={u}>{u}</option>)}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
                     <Label htmlFor="district" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">District</Label>
                     <select name="district" value={formData.district} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
                       <option value="">Select District</option>
@@ -228,13 +235,6 @@ export default function Register() {
                     <select name="college" value={formData.college} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
                       <option value="">Select College</option>
                       {formData.district && COLLEGES[formData.district]?.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="university" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">University</Label>
-                    <select name="university" value={formData.university} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
-                      <option value="">Select University</option>
-                      {UNIVERSITIES.map(u => <option key={u} value={u}>{u}</option>)}
                     </select>
                   </div>
                   <div className="grid grid-cols-2 gap-4">

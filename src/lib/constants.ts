@@ -1,21 +1,17 @@
 export const INTERNSHIP_DOMAINS = [
-  "Web Development & MERN Stack",
-  "Cyber Security & Ethical Hacking",
-  "Digital Literacy & Office Mastery",
-  "Financial Mathematics & Stock Market Basics",
-  "Digital Marketing & SEO",
-  "Data Analytics with Python",
-  "Artificial Intelligence & Machine Learning",
-  "Android App Development",
-  "Cloud Computing & AWS",
-  "UI/UX Design & Branding",
-  "Business Communication & Soft Skills",
-  "Finance & Taxation (GST/Tally)",
-  "Entrepreneurship & Startup Management",
-  "Human Resource Management",
-  "Legal Studies & Cyber Law",
-  "Content Writing & Copywriting",
-  "Public Relations & Media Management"
+  "Web Development",
+  "Cyber Security",
+  "Digital Literacy",
+  "Financial Literacy",
+  "Healthcare",
+  "Teacher Training",
+  "Tourism",
+  "Agriculture",
+  "Graphics and Content Creation",
+  "Entrepreneurship",
+  "Politics and Governance",
+  "Skill and Personality Development",
+  "Disaster Management"
 ];
 
 export const DEPARTMENTS: Record<string, string[]> = {
@@ -159,5 +155,5 @@ export const UNIVERSITIES = [
 export const GENDERS = ["Male", "Female", "Other"];
 export const DEGREES = ["UG", "PG"];
 export const RELATIONSHIPS = ["Father", "Mother", "Brother", "Sister", "Guardian", "Friend"];
-export const SESSIONS = ["2021-24", "2022-25", "2023-26", "2024-27"];
+export const SESSIONS = ["2021-24", "2022-25", "2023-26", "2024-27", "2023-27", "2024-28"];
 export const SEMESTERS = ["Semester 1", "Semester 2", "Semester 3", "Semester 4", "Semester 5", "Semester 6", "Semester 7", "Semester 8"];

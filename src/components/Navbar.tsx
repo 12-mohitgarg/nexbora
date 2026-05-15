@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { auth } from '../lib/firebase';
 import { motion } from 'motion/react';
-import { Handshake, LogIn, User, LogOut, Menu, X } from 'lucide-react';
+import { LogIn, User, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
 
@@ -32,17 +32,11 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-3"
             >
-              <div className="w-12 h-12 bg-[#1e40af] rounded-full flex items-center justify-center border-4 border-blue-100 shadow-lg shadow-blue-600/10 transition-transform group-hover:rotate-12">
-                <Handshake size={24} className="text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-3xl font-black tracking-tighter leading-none text-[#1e40af]">
-                  Intern<span className="text-slate-900">Mitra</span>
-                </span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mt-0.5">
-                  Learn Skills. Earn stipend
-                </span>
-              </div>
+              <img
+                src="/logo.jpeg"
+                alt="InternMitra Logo"
+                className="h-24 w-40"
+              />
             </motion.div>
           </Link>
 

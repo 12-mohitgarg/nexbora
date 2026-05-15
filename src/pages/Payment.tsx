@@ -13,11 +13,20 @@ declare global {
   }
 }
 
+// College-specific pricing
+const getCollegePrice = (collegeName: string | undefined): number => {
+  if (!collegeName) return 1000;
+  const college = collegeName.toLowerCase();
+  if (college.includes('a.h.s.a.') && college.includes('madhubani')) return 700;
+  return 1000;
+};
+
 export default function Payment() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const amount = getCollegePrice(profile?.college);
 
   const handlePayment = async () => {
     if (!user) return;
@@ -35,7 +44,7 @@ export default function Payment() {
       const response = await fetch('/api/payment/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 500 })
+        body: JSON.stringify({ amount })
       });
 
       if (!response.ok) {
@@ -79,7 +88,7 @@ export default function Payment() {
                 userId: user.uid,
                 razorpayOrderId: response.razorpay_order_id,
                 razorpayPaymentId: response.razorpay_payment_id,
-                amount: 500,
+                amount: amount,
                 status: 'success',
                 timestamp: new Date().toISOString()
               });
@@ -169,7 +178,10 @@ export default function Payment() {
             </div>
             <div className="flex justify-between items-center text-3xl font-black text-slate-900 italic">
               <span className="tracking-tighter">COMMIT FEE</span>
-              <span className="flex items-center text-blue-600">₹500.00</span>
+              <div className="flex items-center gap-3 text-slate-500 font-bold italic text-lg">
+                <IndianRupee size={20} />
+                <span>Registration Fee: ₹{amount}</span>
+              </div>
             </div>
           </div>
 
@@ -179,7 +191,7 @@ export default function Payment() {
               <p className="text-xs text-slate-400 font-bold italic leading-relaxed">Secure transaction via <span className="text-slate-900 font-black uppercase tracking-tighter">Razorpay</span> encrypted tunnel. High-integrity processing.</p>
             </div>
             <Button onClick={handlePayment} disabled={loading} className="w-full h-20 bg-blue-600 hover:bg-slate-900 text-white text-xs uppercase tracking-[0.2em] font-black rounded-2xl shadow-2xl shadow-blue-600/20 transition-all duration-500 hover:scale-[1.02]">
-              {loading ? 'Initializing Tunnel...' : 'Finalize Commit (₹500)'}
+              {loading ? 'Initializing Tunnel...' : `Finalize Commit (₹${amount})`}
             </Button>
             <div className="text-center text-[10px] text-slate-300 font-black uppercase tracking-widest italic">All-inclusive. Zero Shadow Costs.</div>
           </div>

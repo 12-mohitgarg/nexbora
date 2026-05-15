@@ -24,7 +24,7 @@ service cloud.firestore {
     function isValidPayment(data) {
       return data.keys().hasAll(['userId', 'razorpayPaymentId', 'amount']) &&
              data.userId == request.auth.uid &&
-             data.amount == 500 &&
+             (data.amount == 700 || data.amount == 1000) &&
              data.razorpayPaymentId is string;
     }
 

@@ -19,6 +19,7 @@ export default function OfferLetter() {
   const navigate = useNavigate();
   const [headerImg, setHeaderImg] = useState<string>('');
   const [footerImg, setFooterImg] = useState<string>('');
+  const [watermarkImg, setWatermarkImg] = useState<string>('');
 
   useEffect(() => {
     const loadImg = (src: string, setter: (d: string) => void) => {
@@ -34,6 +35,7 @@ export default function OfferLetter() {
     };
     loadImg('/ii.png', setHeaderImg);
     loadImg('/ff.png', setFooterImg);
+    loadImg('/dded.jpeg', setWatermarkImg);
   }, []);
 
   const generatePDF = () => {
@@ -65,6 +67,17 @@ export default function OfferLetter() {
     // ── HEADER IMAGE ──────────────────────────────────────────────
     doc.addImage(headerImg, 'PNG', 0, 0, W, headerH);
 
+    // ── WATERMARK ─────────────────────────────────────────────────
+    if (watermarkImg) {
+      const wmSize = 90;
+      const wmX = (W - wmSize) / 2;
+      const wmY = (H - wmSize) / 2;
+      (doc as any).saveGraphicsState();
+      (doc as any).setGState((doc as any).GState({ opacity: 0.12 }));
+      doc.addImage(watermarkImg, 'JPEG', wmX, wmY, wmSize, wmSize);
+      (doc as any).restoreGraphicsState();
+    }
+
     // ── BODY CONTENT ──────────────────────────────────────────────
     const x = ML;
     let y = headerH + 5;
@@ -82,17 +95,17 @@ export default function OfferLetter() {
     // To section
     doc.text('To,', x, y); y += 6;
     doc.setFont('Helvetica', 'bold');
-    doc.text(`[${studentName}]`, x, y); y += 6;
+    doc.text(profile?.fullName ? studentName : `[${studentName}]`, x, y); y += 6;
     doc.setFont('Helvetica', 'normal');
     const urnL = 'University Roll Number: ';
     doc.text(urnL, x, y);
     doc.setFont('Helvetica', 'bold');
-    doc.text(`[${rollNumber}]`, x + doc.getTextWidth(urnL), y); y += 6;
+    doc.text(profile?.universityRoll ? rollNumber : `[${rollNumber}]`, x + doc.getTextWidth(urnL), y); y += 6;
     doc.setFont('Helvetica', 'normal');
     const ciL = 'College / Institution: ';
     doc.text(ciL, x, y);
     doc.setFont('Helvetica', 'bold');
-    doc.text(`[${college}]`, x + doc.getTextWidth(ciL), y); y += 9;
+    doc.text(profile?.college ? college : `[${college}]`, x + doc.getTextWidth(ciL), y); y += 9;
 
     // Dear Candidate + body paragraph
     doc.setFont('Helvetica', 'normal');
@@ -108,11 +121,11 @@ export default function OfferLetter() {
     // Details table
     const colC = 76, colV = 80, rH = 6.5;
     const rows: [string, string][] = [
-      ['Name of the Student', `[${studentName}]`],
-      ['University Roll Number', `[${rollNumber}]`],
-      ['College / Institution', `[${college}]`],
+      ['Name of the Student', profile?.fullName ? studentName : `[${studentName}]`],
+      ['University Roll Number', profile?.universityRoll ? rollNumber : `[${rollNumber}]`],
+      ['College / Institution', profile?.college ? college : `[${college}]`],
       ['Department & Semester', deptSemester],
-      ['Internship Domain', `[${domain}]`],
+      ['Internship Domain', profile?.internshipDomain ? domain : `[${domain}]`],
       ['Internship Duration', '120 Hours'],
       ['Mode of Internship', 'Online (as approved by College)'],
       ['Internship Start Date', '01/06/2026'],
