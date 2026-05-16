@@ -30,8 +30,8 @@ export default function Contact() {
           {/* Info Side */}
           <div className="lg:col-span-2 space-y-8">
              {[
-               { title: 'Primary Communication', val: 'contact@internmitra.in', icon: Mail, color: 'text-blue-600', bg: 'bg-blue-50' },
-               { title: 'Voice Frequency', val: '+91 98765 43210', icon: Phone, color: 'text-blue-600', bg: 'bg-blue-50' },
+               { title: 'Primary Communication', val: 'info@internmitra.com', icon: Mail, color: 'text-blue-600', bg: 'bg-blue-50' },
+               { title: 'Voice Frequency', val: '9693921517', icon: Phone, color: 'text-blue-600', bg: 'bg-blue-50' },
                { title: 'Physical Node', val: 'New Delhi, India', icon: MapPin, color: 'text-blue-600', bg: 'bg-blue-50' },
              ].map((item, i) => (
                <motion.div

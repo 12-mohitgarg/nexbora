@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
@@ -20,8 +21,20 @@ export default function Login() {
     setLoading(true);
     setError(null);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard');
+      // Firebase Auth login
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if user exists in users collection
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      
+      if (userDoc.exists()) {
+        // Regular user - navigate to dashboard
+        navigate('/dashboard');
+      } else {
+        // Not in users collection - assume admin (will be verified in AuthContext)
+        navigate('/admin-dashboard');
+      }
     } catch (err: any) {
       setError("Invalid credentials. Please try again.");
     } finally {

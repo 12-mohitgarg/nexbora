@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../lib/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { handleFirestoreError, OperationType } from '../lib/firebase';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { 
-  DISTRICTS, 
-  COLLEGES, 
   GENDERS, 
   DEGREES, 
   DEPARTMENTS, 
-  INTERNSHIP_DOMAINS, 
   SESSIONS,
-  SEMESTERS,
-  UNIVERSITIES
+  SEMESTERS
 } from '../lib/constants';
 import { ChevronRight, ChevronLeft, GraduationCap, ArrowRight, ShieldCheck, User, School, AlertCircle, Handshake } from 'lucide-react';
+
+interface District {
+  id: string;
+  name: string;
+}
+
+interface College {
+  id: string;
+  name: string;
+  districtId: string;
+}
+
+interface University {
+  id: string;
+  name: string;
+}
+
+interface Course {
+  id: string;
+  name: string;
+  price: number;
+}
 
 export default function Register() {
   const [step, setStep] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [colleges, setColleges] = useState<College[]>([]);
+  const [universities, setUniversities] = useState<University[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -55,6 +79,53 @@ export default function Register() {
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
     }));
     setError(null);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      // Fetch districts
+      const districtsRef = collection(db, 'districts');
+      const districtsQuery = query(districtsRef, orderBy('name'));
+      const districtsSnapshot = await getDocs(districtsQuery);
+      setDistricts(districtsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as District)));
+
+      // Fetch universities
+      const universitiesRef = collection(db, 'universities');
+      const universitiesQuery = query(universitiesRef, orderBy('name'));
+      const universitiesSnapshot = await getDocs(universitiesQuery);
+      setUniversities(universitiesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as University)));
+
+      // Fetch courses
+      const coursesRef = collection(db, 'courses');
+      const coursesQuery = query(coursesRef, orderBy('name'));
+      const coursesSnapshot = await getDocs(coursesQuery);
+      setCourses(coursesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Course)));
+
+      // Fetch colleges
+      const collegesRef = collection(db, 'colleges');
+      const collegesSnapshot = await getDocs(collegesRef);
+      setColleges(collegesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as College)));
+
+      setDataLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setDataLoading(false);
+    }
+  };
+
+  const getCollegesForDistrict = (districtName: string) => {
+    const district = districts.find(d => d.name === districtName);
+    if (!district) return [];
+    return colleges.filter(c => c.districtId === district.id);
+  };
+
+  const getCoursePrice = (courseName: string) => {
+    const course = courses.find(c => c.name === courseName);
+    return course?.price || 0;
   };
 
   const nextStep = () => {
@@ -220,21 +291,21 @@ export default function Register() {
                     <Label htmlFor="university" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">University</Label>
                     <select name="university" value={formData.university} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
                       <option value="">Select University</option>
-                      {UNIVERSITIES.map(u => <option key={u} value={u}>{u}</option>)}
+                      {universities.map(u => <option key={u.id} value={u.name}>{u.name}</option>)}
                     </select>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="district" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">District</Label>
                     <select name="district" value={formData.district} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
                       <option value="">Select District</option>
-                      {DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
+                      {districts.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
                     </select>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="college" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">College Affiliate</Label>
                     <select name="college" value={formData.college} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
                       <option value="">Select College</option>
-                      {formData.district && COLLEGES[formData.district]?.map(c => <option key={c} value={c}>{c}</option>)}
+                      {formData.district && getCollegesForDistrict(formData.district).map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                     </select>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -286,8 +357,11 @@ export default function Register() {
                     <Label htmlFor="internshipDomain" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Target Domain</Label>
                     <select name="internshipDomain" value={formData.internshipDomain} onChange={handleChange} className="w-full h-14 rounded-2xl border-transparent bg-slate-50 px-4 focus:bg-white focus:border-blue-500 transition-all font-bold text-sm">
                       <option value="">Select Domain</option>
-                      {INTERNSHIP_DOMAINS.map(d => <option key={d} value={d}>{d}</option>)}
+                      {courses.map(c => <option key={c.id} value={c.name}>{c.name} </option>)}
                     </select>
+                    {/* {formData.internshipDomain && (
+                      <p className="text-xs text-slate-500 font-bold">Course Price: ₹{getCoursePrice(formData.internshipDomain)}</p>
+                    )} */}
                   </div>
                 </div>
               )}

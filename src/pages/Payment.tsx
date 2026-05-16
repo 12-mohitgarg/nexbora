@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../lib/firebase';
-import { doc, updateDoc, setDoc } from 'firebase/firestore';
+import { doc, updateDoc, setDoc, collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { Button } from '../components/ui/button';
 import { motion } from 'motion/react';
 import { CreditCard, ShieldCheck, CheckCircle2, IndianRupee } from 'lucide-react';
@@ -13,20 +13,48 @@ declare global {
   }
 }
 
-// College-specific pricing
-const getCollegePrice = (collegeName: string | undefined): number => {
-  if (!collegeName) return 1000;
-  const college = collegeName.toLowerCase();
-  if (college.includes('a.h.s.a.') && college.includes('madhubani')) return 700;
-  return 1000;
-};
+interface Course {
+  id: string;
+  name: string;
+  price: number;
+}
 
 export default function Payment() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const amount = getCollegePrice(profile?.college);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [amount, setAmount] = useState(1000);
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const coursesRef = collection(db, 'courses');
+      const coursesQuery = query(coursesRef, orderBy('name'));
+      const coursesSnapshot = await getDocs(coursesQuery);
+      const coursesData = coursesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Course));
+      setCourses(coursesData);
+
+      // Get price for user's selected course
+      if (profile?.internshipDomain) {
+        const userCourse = coursesData.find(c => c.name === profile.internshipDomain);
+        setAmount(userCourse?.price || 1000);
+      }
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (profile?.internshipDomain && courses.length > 0) {
+      const userCourse = courses.find(c => c.name === profile.internshipDomain);
+      setAmount(userCourse?.price || 1000);
+    }
+  }, [profile, courses]);
 
   const handlePayment = async () => {
     if (!user) return;
