@@ -322,12 +322,12 @@ export default function Home() {
 
             <div className="flex items-center gap-3">
               <Mail />
-              support@eduintern.in
+              info@internmitra.com
             </div>
 
             <div className="flex items-center gap-3">
               <Phone />
-              +91 7544090878
+              +91 9693921517
             </div>
 
           </div>
@@ -347,12 +347,12 @@ export default function Home() {
               <div className="flex items-center gap-3 mb-6">
 
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold">
-                  E
+                  I
                 </div>
 
                 <div>
                   <h2 className="text-3xl font-bold">
-                    Eduintern
+                    Internmitra
                   </h2>
 
                   <p className="text-slate-400 text-sm">
@@ -388,17 +388,17 @@ export default function Home() {
 
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-cyan-400" />
-                  support@eduintern.in
+                  info@internmitra.com
                 </div>
 
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-cyan-400" />
-                  +91 7544090878
+                  +91 9693921517
                 </div>
 
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-cyan-400 mt-1" />
-                  Patna, Bihar, India
+                  New Delhi, India
                 </div>
 
               </div>
@@ -449,7 +449,7 @@ export default function Home() {
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400">
 
             <p>
-              © 2026 Eduintern. All rights reserved.
+              © 2026 Internmitra. All rights reserved.
             </p>
 
             <div className="flex items-center gap-2">
