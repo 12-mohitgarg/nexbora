@@ -89,9 +89,11 @@ export default function Home() {
                 </button>
               </Link>
 
-              <button className="border border-white/20 px-8 py-4 rounded-2xl font-semibold hover:bg-white/10 transition">
-                Explore Features
-              </button>
+              <Link to="/login">
+                <button className="border border-white/20 px-8 py-4 rounded-2xl font-semibold hover:bg-white/10 transition">
+                  Login
+                </button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
@@ -398,7 +400,7 @@ export default function Home() {
 
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-cyan-400 mt-1" />
-                  New Delhi, India
+                  Patna,Bihar, India
                 </div>
 
               </div>
