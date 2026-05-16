@@ -24,7 +24,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-slate-100 shadow-sm">
+    <nav className="relative z-50 bg-white border-b border-slate-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-24 items-center">
           <Link to="/" className="flex items-center gap-3 group">
@@ -115,13 +115,60 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
-              <Link to="/login" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-600">
-                Login
-              </Link>
-              <Link to="/register" onClick={() => setIsOpen(false)}>
-                <Button className="w-full bg-orange-500 text-white">Join Now</Button>
-              </Link>
+            <div className="pt-5">
+
+              <div className="bg-gradient-to-r from-blue-50 via-white to-purple-50 border border-blue-100 shadow-lg rounded-3xl p-4">
+
+                <div className="flex items-center gap-3">
+
+                  {/* Login Button */}
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="flex-1"
+                  >
+                    <button className="w-full h-14 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center gap-2 text-slate-700 font-semibold text-sm hover:shadow-md hover:border-blue-300 transition-all duration-300">
+
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        <LogIn className="w-4 h-4 text-blue-600" />
+                      </div>
+
+                      Login
+
+                    </button>
+                  </Link>
+
+                  {/* Register Button */}
+                  <Link
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="flex-1"
+                  >
+                    <button className="relative overflow-hidden w-full h-14 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-semibold text-sm shadow-xl shadow-blue-500/30 hover:scale-[1.03] transition-all duration-300">
+
+                      <span className="relative z-10 flex items-center justify-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                          ✨
+                        </div>
+
+                        Register
+                      </span>
+
+                      {/* Glow Effect */}
+                      <div className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-all duration-300" />
+
+                    </button>
+                  </Link>
+
+                </div>
+
+                {/* Bottom Text */}
+                <p className="text-center text-[11px] text-slate-500 mt-4 font-medium tracking-wide">
+                  🚀 Start your internship journey with Internmitra
+                </p>
+
+              </div>
+
             </div>
           )}
         </motion.div>
