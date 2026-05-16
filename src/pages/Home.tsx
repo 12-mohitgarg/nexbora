@@ -181,7 +181,192 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* TESTIMONIALS */}
+      <section className="py-24 bg-slate-50">
 
+        <div className="max-w-7xl mx-auto px-4">
+
+          <div className="text-center mb-14">
+
+            <h2 className="text-5xl font-bold mb-5">
+              What People Say About
+              <span className="text-blue-600"> Internmitra </span>
+            </h2>
+
+            <p className="text-slate-600 text-lg">
+              Trusted by students and teachers across India.
+            </p>
+
+          </div>
+
+          {/* FILTER BUTTONS */}
+          <div className="flex justify-center mb-14">
+
+            <div className="bg-white shadow-lg rounded-full p-2 flex items-center gap-2 border border-slate-100">
+
+              <button className="px-8 py-3 rounded-full bg-blue-600 text-white font-semibold text-sm shadow-md">
+                All
+              </button>
+
+              <button className="px-8 py-3 rounded-full text-slate-600 font-semibold text-sm hover:bg-slate-100 transition">
+                Students
+              </button>
+
+              <button className="px-8 py-3 rounded-full text-slate-600 font-semibold text-sm hover:bg-slate-100 transition">
+                Teachers
+              </button>
+
+            </div>
+
+          </div>
+
+          {/* TESTIMONIAL GRID */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            {[
+              {
+                name: "Rahul Kumar",
+                role: "B.Tech Student",
+                type: "Student",
+                review:
+                  "Internmitra helped me gain real internship experience with live projects.",
+              },
+              {
+                name: "Priya Sharma",
+                role: "MBA Student",
+                type: "Student",
+                review:
+                  "The training sessions and internship tasks were very practical.",
+              },
+              {
+                name: "Aman Raj",
+                role: "BCA Student",
+                type: "Student",
+                review:
+                  "Amazing platform for students and certification support.",
+              },
+              {
+                name: "Neha Singh",
+                role: "BBA Student",
+                type: "Student",
+                review:
+                  "Very professional internship management system.",
+              },
+              {
+                name: "Ritesh Kumar",
+                role: "MCA Student",
+                type: "Student",
+                review:
+                  "Mentorship support was excellent throughout the internship.",
+              },
+              {
+                name: "Pooja Verma",
+                role: "B.Sc Student",
+                type: "Student",
+                review:
+                  "Internmitra improved my communication and technical skills.",
+              },
+              {
+                name: "Dr. Rajesh Kumar",
+                role: "College Professor",
+                type: "Teacher",
+                review:
+                  "Very useful internship platform for colleges and students.",
+              },
+              {
+                name: "Anjali Sinha",
+                role: "Training Mentor",
+                type: "Teacher",
+                review:
+                  "Easy dashboard and proper internship workflow system.",
+              },
+              {
+                name: "Deepak Sir",
+                role: "Faculty",
+                type: "Teacher",
+                review:
+                  "Professional certification and tracking process.",
+              },
+              {
+                name: "Ravi Sir",
+                role: "Placement Trainer",
+                type: "Teacher",
+                review:
+                  "Students are getting real industry exposure.",
+              },
+              {
+                name: "Meena Ma'am",
+                role: "Mentor",
+                type: "Teacher",
+                review:
+                  "Excellent support and learning management.",
+              },
+              {
+                name: "Abhishek Sir",
+                role: "Technical Trainer",
+                type: "Teacher",
+                review:
+                  "One of the best internship platforms for students.",
+              },
+            ].map((item, index) => (
+
+              <motion.div
+                key={index}
+                whileHover={{ y: -8 }}
+                className="bg-white rounded-[30px] p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all duration-300"
+              >
+
+                {/* STARS */}
+                <div className="flex gap-1 mb-5 text-yellow-400 text-xl">
+                  ★★★★★
+                </div>
+
+                {/* REVIEW */}
+                <p className="text-slate-600 leading-8 mb-8 text-lg">
+                  "{item.review}"
+                </p>
+
+                {/* USER */}
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-4">
+
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                      {item.name.charAt(0)}
+                    </div>
+
+                    <div>
+
+                      <h4 className="font-bold text-lg text-slate-900">
+                        {item.name}
+                      </h4>
+
+                      <p className="text-slate-500">
+                        {item.role}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                  <span className={`px-4 py-1 rounded-full text-xs font-semibold ${item.type === "Student"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-blue-100 text-blue-700"
+                    }`}>
+                    {item.type}
+                  </span>
+
+                </div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      </section>
       {/* INTERNSHIP FLOW */}
       <section className="py-24 bg-[#071B4D] text-white">
 
