@@ -58,7 +58,7 @@ export default function Payment() {
 
   const handlePayment = async () => {
     if (!user) return;
-    
+
     if (typeof window.Razorpay === 'undefined') {
       console.error('Razorpay SDK not loaded');
       alert('Payment gateway is still initializing. Please wait a moment and try again.');
@@ -136,7 +136,7 @@ export default function Payment() {
         },
         theme: { color: '#2563eb' },
         modal: {
-          ondismiss: function() {
+          ondismiss: function () {
             setLoading(false);
           }
         }
@@ -160,7 +160,7 @@ export default function Payment() {
   if (success) {
     return (
       <div className="h-[calc(100vh-80px)] flex items-center justify-center bg-slate-50 p-6">
-        <motion.div 
+        <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           className="max-w-md w-full bg-slate-900 p-12 lg:p-16 rounded-[4rem] shadow-2xl text-center relative overflow-hidden group"
@@ -183,7 +183,7 @@ export default function Payment() {
 
   return (
     <div className="h-[calc(100vh-80px)] flex items-center justify-center bg-slate-100 p-6">
-      <motion.div 
+      <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="max-w-md w-full bg-white p-12 lg:p-16 rounded-[4rem] shadow-2xl border border-slate-100 relative overflow-hidden"
@@ -204,12 +204,20 @@ export default function Payment() {
               <span className="text-slate-400 font-black uppercase tracking-widest text-[10px] italic">Registry Point</span>
               <span className="text-slate-900 font-black italic tracking-tighter">IM-2026-ACTIVE</span>
             </div>
-            <div className="flex justify-between items-center text-3xl font-black text-slate-900 italic">
-              <span className="tracking-tighter">COMMIT FEE</span>
-              <div className="flex items-center gap-3 text-slate-500 font-bold italic text-lg">
-                <IndianRupee size={20} />
-                <span>Registration Fee: ₹{amount}</span>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 text-slate-900 italic">
+
+              <span className="tracking-tighter text-2xl sm:text-3xl font-black break-words">
+                COMMIT FEE
+              </span>
+
+              <div className="flex items-center gap-2 sm:gap-3 text-slate-500 font-bold italic text-sm sm:text-lg flex-wrap">
+                {/* <IndianRupee size={18} className="flex-shrink-0" /> */}
+
+                <span className="break-words">
+                  Registration Fee: ₹{amount}
+                </span>
               </div>
+
             </div>
           </div>
 

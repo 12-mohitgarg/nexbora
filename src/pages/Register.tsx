@@ -8,10 +8,10 @@ import { handleFirestoreError, OperationType } from '../lib/firebase';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
-import { 
-  GENDERS, 
-  DEGREES, 
-  DEPARTMENTS, 
+import {
+  GENDERS,
+  DEGREES,
+  DEPARTMENTS,
   SESSIONS,
   SEMESTERS
 } from '../lib/constants';
@@ -216,9 +216,9 @@ export default function Register() {
             <div className="w-12 h-12 bg-[#1e40af] rounded-xl flex items-center justify-center mb-8 shadow-lg shadow-blue-600/20 transition-transform hover:rotate-12">
               <Handshake size={28} />
             </div>
-            <h2 className="text-3xl font-extrabold mb-4 tracking-tighter leading-tight italic">Join the Future <br/>of Learning.</h2>
+            <h2 className="text-3xl font-extrabold mb-4 tracking-tighter leading-tight italic">Join the Future <br />of Learning.</h2>
             <p className="text-slate-400 mb-8 leading-relaxed font-medium italic text-sm">Complete your registration to access premium internship domains and industry certifications.</p>
-            
+
             <div className="space-y-6">
               {steps.map((s, i) => (
                 <div key={s.title} className={`flex items-center gap-4 transition-all duration-300 ${step > i + 1 ? 'opacity-100' : step === i + 1 ? 'opacity-100 scale-105 font-bold' : 'opacity-30'}`}>
@@ -241,8 +241,8 @@ export default function Register() {
         {/* Form Area */}
         <div className="md:w-2/3 p-10 lg:p-16 flex flex-col">
           <div className="mb-12">
-             <div className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-2">Step {step} of 3</div>
-             <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic">{steps[step-1].title}</h3>
+            <div className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-2">Step {step} of 3</div>
+            <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic">{steps[step - 1].title}</h3>
           </div>
 
           <AnimatePresence mode="wait">
@@ -379,7 +379,7 @@ export default function Register() {
                     <Label htmlFor="confirmPassword" className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Confirm Secret</Label>
                     <Input id="confirmPassword" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Verify password" className="h-14 rounded-2xl bg-slate-50 border-transparent focus:bg-white focus:border-blue-500 font-bold" />
                   </div>
-                  <div className="flex items-center gap-3 pt-6 group cursor-pointer" onClick={() => setFormData({...formData, terms: !formData.terms})}>
+                  <div className="flex items-center gap-3 pt-6 group cursor-pointer" onClick={() => setFormData({ ...formData, terms: !formData.terms })}>
                     <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${formData.terms ? 'bg-blue-600 border-blue-600' : 'border-slate-200'}`}>
                       {formData.terms && <ChevronRight size={14} className="text-white rotate-90" />}
                     </div>
@@ -393,18 +393,27 @@ export default function Register() {
           </AnimatePresence>
 
           {/* Actions */}
-          <div className="mt-12 flex items-center justify-between pt-8 border-t border-slate-50">
+          <div className="mt-12 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between pt-8 border-t border-slate-50">
             {step > 1 ? (
-              <Button variant="ghost" onClick={prevStep} className="h-14 px-8 rounded-2xl text-slate-400 font-black uppercase tracking-widest hover:text-slate-900 transition-colors">
-                <ChevronLeft className="mr-2 h-5 w-5" /> Back
+              <Button
+                variant="ghost"
+                onClick={prevStep}
+                className="w-full sm:w-auto h-12 sm:h-14 px-6 sm:px-8 rounded-2xl text-slate-400 font-black uppercase tracking-wide text-xs sm:text-sm hover:text-slate-900 transition-colors flex items-center justify-center"
+              >
+                <ChevronLeft className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                Back
               </Button>
             ) : (
               <div />
             )}
-            
+
             {step < 3 ? (
-              <Button onClick={nextStep} className="h-14 px-10 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black uppercase tracking-widest shadow-xl shadow-slate-900/10">
-                Next Step <ChevronRight className="ml-2 h-5 w-5" />
+              <Button
+                onClick={nextStep}
+                className="w-full sm:w-auto h-12 sm:h-14 px-6 sm:px-10 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black uppercase tracking-wide text-xs sm:text-sm shadow-xl shadow-slate-900/10 flex items-center justify-center"
+              >
+                Next Step
+                <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
               </Button>
             ) : (
               <Button onClick={handleSubmit} disabled={loading} className="h-14 px-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-widest shadow-xl shadow-blue-600/20">
