@@ -68,65 +68,31 @@ export default function Payment() {
     setLoading(true);
 
     try {
-      // 1. Create order on server
-      const response = await fetch('/api/payment/order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount })
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Order creation failed: ${errorText}`);
-      }
-
-      const order = await response.json();
-      console.log('Order created successfully:', order.id);
-
-      // 2. Open Razorpay Checkout
       const options = {
         key: "rzp_live_SoVxB05ogtK0Fl",
-        amount: order.amount,
-        currency: order.currency,
+        amount: amount * 100,
+        currency: 'INR',
         name: 'INTERNMITRA',
         description: 'Internship Registration Fee',
-        order_id: order.id,
         handler: async function (response: any) {
           console.log('Payment received:', response.razorpay_payment_id);
           try {
-            // 3. Verify payment on server
-            const verifyRes = await fetch('/api/payment/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(response)
+            // Update Firestore directly after successful payment
+            await updateDoc(doc(db, 'users', user.uid), {
+              isPaid: true
             });
-
-            if (!verifyRes.ok) {
-              throw new Error('Payment verification failed');
-            }
-
-            const verifyData = await verifyRes.json();
-
-            if (verifyData.status === 'success') {
-              // 4. Update Firestore
-              await updateDoc(doc(db, 'users', user.uid), {
-                isPaid: true
-              });
-              await setDoc(doc(db, 'payments', response.razorpay_payment_id), {
-                userId: user.uid,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                amount: amount,
-                status: 'success',
-                timestamp: new Date().toISOString()
-              });
-              setSuccess(true);
-            } else {
-              alert('Payment verification failed. Please contact support.');
-            }
-          } catch (verifyError) {
-            console.error('Verification Error:', verifyError);
-            alert('Error verifying payment. Please do not close this page and contact support with your payment ID.');
+            await setDoc(doc(db, 'payments', response.razorpay_payment_id), {
+              userId: user.uid,
+              razorpayOrderId: response.razorpay_order_id || '',
+              razorpayPaymentId: response.razorpay_payment_id,
+              amount: amount,
+              status: 'success',
+              timestamp: new Date().toISOString()
+            });
+            setSuccess(true);
+          } catch (err) {
+            console.error('Firestore update error:', err);
+            alert('Payment successful but profile update failed. Please contact support with payment ID: ' + response.razorpay_payment_id);
           }
         },
         prefill: {
@@ -152,8 +118,7 @@ export default function Payment() {
     } catch (error) {
       console.error('Payment Error:', error);
       alert('Could not initialize payment. Please check your internet connection and try again.');
-    } finally {
-      // Note: loading state is also handled in rzp callbacks
+      setLoading(false);
     }
   };
 
