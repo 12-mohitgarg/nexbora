@@ -13,13 +13,16 @@ import {
   Hash
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
+import { db } from '../../lib/firebase';
+import { doc, getDoc, updateDoc, runTransaction, increment } from 'firebase/firestore';
 
 export default function OfferLetter() {
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
   const navigate = useNavigate();
   const [headerImg, setHeaderImg] = useState<string>('');
   const [footerImg, setFooterImg] = useState<string>('');
   const [watermarkImg, setWatermarkImg] = useState<string>('');
+  const [offerLetterNumber, setOfferLetterNumber] = useState<string>('');
 
   useEffect(() => {
     const loadImg = (src: string, setter: (d: string) => void) => {
@@ -38,8 +41,45 @@ export default function OfferLetter() {
     loadImg('/dded.jpeg', setWatermarkImg);
   }, []);
 
-  const generatePDF = () => {
+  const getOfferLetterNumber = async (): Promise<string> => {
+    if (!user) return '10000';
+
+    // Check if user already has an offer letter number
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    const userData = userDoc.data();
+    if (userData?.offerLetterNumber) {
+      return userData.offerLetterNumber;
+    }
+
+    // Get next sequential number using transaction
+    const counterRef = doc(db, 'counters', 'offerLetter');
+    const nextNumber = await runTransaction(db, async (transaction) => {
+      const counterDoc = await transaction.get(counterRef);
+      
+      if (!counterDoc.exists()) {
+        // Initialize counter starting from 10001
+        transaction.set(counterRef, { count: 10001, lastUpdated: new Date().toISOString() });
+        return 10001;
+      }
+
+      const currentCount = counterDoc.data().count;
+      const newCount = currentCount + 1;
+      transaction.update(counterRef, { count: newCount, lastUpdated: new Date().toISOString() });
+      
+      return newCount;
+    });
+
+    // Save the number to user's profile
+    await updateDoc(doc(db, 'users', user.uid), { offerLetterNumber: nextNumber.toString() });
+    
+    return nextNumber.toString();
+  };
+
+  const generatePDF = async () => {
     if (!headerImg || !footerImg) { alert('Images are still loading, please try again in a moment.'); return; }
+
+    // Get the sequential offer letter number
+    const letterNumber = await getOfferLetterNumber();
 
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const W = 210, H = 297, ML = 14;
@@ -87,7 +127,7 @@ export default function OfferLetter() {
     doc.setFont('Helvetica', 'normal');
     doc.text('Letter Ref. No.: ', x, y);
     doc.setFont('Helvetica', 'bold');
-    doc.text('IM/2026/IOL/10000', x + doc.getTextWidth('Letter Ref. No.: '), y);
+    doc.text(`IM/2026/IOL/${letterNumber}`, x + doc.getTextWidth('Letter Ref. No.: '), y);
     doc.setFont('Helvetica', 'normal');
     doc.text(`Date: ${letterDate}`, W - ML, y, { align: 'right' });
     y += 9;
