@@ -28,11 +28,7 @@ export const INTERNSHIP_DOMAINS = [
 
 export const DEPARTMENTS: Record<string, string[]> = {
   "B.Tech.": ["Computer Science", "Electrical Engineering", "Mechanical Engineering", "Civil Engineering", "Chemical Engineering"],
-  "B.A.": ["History", "Political Science", "Economics", "Sociology", "Psychology", "English", "Hindi"],
-  "B.Com.": ["Accountancy", "Business Studies", "Corporate Finance"],
-  "M.Sc.": ["Botany", "Chemistry", "Mathematics", "Physics", "Zoology"],
-  "M.A.": ["History", "Political Science", "Economics"],
-  "M.Com.": ["Advanced Accountancy", "Business Administration"]
+
 };
 
 export const DISTRICTS = ["Darbhanga", "Madhubani", "Samastipur", "Begusarai"];

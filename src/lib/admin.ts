@@ -1,6 +1,6 @@
 export const ADMIN_EMAILS = [
   'gargmohit8306@gmail.com',
-  'admin@nexboratechnologies.com',
+  'admin@internmitra.com',
 ];
 
 export function isAdminEmail(email?: string | null) {
