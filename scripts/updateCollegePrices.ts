@@ -9,7 +9,7 @@ async function updateCollegePrices() {
   try {
     // Authenticate as admin first
     console.log('🔐 Authenticating as admin...');
-    const email = 'admin@internmitra.com';
+    const email = 'admin@nexboratechnologies.com';
     const password = 'Admin@123';
     await signInWithEmailAndPassword(auth, email, password);
     console.log('✅ Admin authenticated successfully');

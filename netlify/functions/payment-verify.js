@@ -16,7 +16,7 @@ exports.handler = async (event) => {
       };
     }
 
-    const secret = process.env.RAZORPAY_KEY_SECRET || '23a2eaU3UwRf4LnZaBWVvpvr';
+    const secret = process.env.RAZORPAY_KEY_SECRET || 'WOXrKl7pLl64Vl4Zys3yYpAU';
     const hmac = crypto.createHmac('sha256', secret);
     hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
     const generated_signature = hmac.digest('hex');

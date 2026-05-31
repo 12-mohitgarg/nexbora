@@ -10,7 +10,7 @@ async function seedSubjects() {
   try {
     // Authenticate as admin first
     console.log('🔐 Authenticating as admin...');
-    const email = 'admin@internmitra.com';
+    const email = 'admin@nexboratechnologies.com';
     const password = 'Admin@123';
     await signInWithEmailAndPassword(auth, email, password);
     console.log('✅ Admin authenticated successfully');
@@ -66,7 +66,7 @@ async function seedSubjects() {
   } catch (error) {
     console.error('❌ Error seeding subjects:', error);
     console.error('\n💡 Make sure:');
-    console.error('1. You are logged in as admin (admin@internmitra.com)');
+    console.error('1. You are logged in as admin (admin@nexboratechnologies.com)');
     console.error('2. Firestore rules allow admin write access to degrees collection');
     console.error('3. Your internet connection is stable');
     process.exit(1);

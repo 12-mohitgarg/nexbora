@@ -199,7 +199,7 @@ export default function LMS() {
     doc.setFontSize(12);
     doc.setTextColor(107, 114, 128);
     doc.setFont('Helvetica', 'normal');
-    doc.text('InternMitra - Internship Program', W / 2, 175, { align: 'center' });
+    doc.text('NexBora - Internship Program', W / 2, 175, { align: 'center' });
     doc.text(new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }), W / 2, 185, { align: 'center' });
     
     doc.save(`${profile?.fullName || 'Certificate'}_${courseName.replace(/\s+/g, '_')}_Certificate.pdf`);
@@ -279,7 +279,7 @@ export default function LMS() {
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                title="InternMitra Live Training"
+                title="NexBora Live Training"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />

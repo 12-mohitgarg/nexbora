@@ -1,3 +1,15 @@
+export const COMPANY = {
+  name: "NexBora Technologies",
+  legalName: "NexBora Technologies Private Limited",
+  shortName: "NexBora",
+  email: "nexboratechnology@gmail.com",
+  website: "nexboratechnologies.com",
+  phone: "+91 8302442202",
+  phoneHref: "tel:+918302442202",
+  address: "Jaipur, Rajasthan, India",
+  cin: "U78300BR2025PTC081140",
+};
+
 export const INTERNSHIP_DOMAINS = [
   "Web Development",
   "Cyber Security",
@@ -15,7 +27,7 @@ export const INTERNSHIP_DOMAINS = [
 ];
 
 export const DEPARTMENTS: Record<string, string[]> = {
-  "B.Sc.": ["Botany", "Chemistry", "Mathematics", "Physics", "Zoology", "Computer Science"],
+  "B.Tech.": ["Computer Science", "Electrical Engineering", "Mechanical Engineering", "Civil Engineering", "Chemical Engineering"],
   "B.A.": ["History", "Political Science", "Economics", "Sociology", "Psychology", "English", "Hindi"],
   "B.Com.": ["Accountancy", "Business Studies", "Corporate Finance"],
   "M.Sc.": ["Botany", "Chemistry", "Mathematics", "Physics", "Zoology"],

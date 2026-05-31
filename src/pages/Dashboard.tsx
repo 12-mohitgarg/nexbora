@@ -22,6 +22,7 @@ import LMS from './dashboard/LMS';
 import Assignments from './dashboard/Assignments';
 import Profile from './dashboard/Profile';
 import Certifications from './dashboard/Certifications';
+import { COMPANY } from '../lib/constants';
 
 export default function Dashboard() {
   const { user, profile } = useAuth();
@@ -51,7 +52,7 @@ export default function Dashboard() {
     const roll = profile?.universityRoll || 'N/A';
     const paymentId = paymentRecord?.razorpayPaymentId || 'N/A';
     const orderId = paymentRecord?.razorpayOrderId || 'N/A';
-    const amount = paymentRecord?.amount ? `Rs. ${paymentRecord.amount}.00` : 'Rs. 500.00';
+    const amount = paymentRecord?.amount ? `Rs. ${paymentRecord.amount}.00` : 'Rs. 1000.00';
     const paidOn = paymentRecord?.timestamp
       ? new Date(paymentRecord.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })
       : 'N/A';
@@ -61,12 +62,12 @@ export default function Dashboard() {
     doc.setTextColor(255, 255, 255);
     doc.setFont('Helvetica', 'bold');
     doc.setFontSize(18);
-    doc.text('InternMitra', ML, 14);
+    doc.text('NexBora', ML, 14);
     doc.setFontSize(8);
     doc.setFont('Helvetica', 'italic');
-    doc.text('Internmitra Technologies Private Limited', ML, 20);
+    doc.text(COMPANY.legalName, ML, 20);
     doc.setFont('Helvetica', 'normal');
-    doc.text('www.internmitra.com  |  info@internmitra.com  |  CIN: U78300BR2025PTC081140', ML, 26);
+    doc.text(`www.${COMPANY.website}  |  ${COMPANY.email}  |  CIN: ${COMPANY.cin}`, ML, 26);
 
     doc.setFillColor(241, 245, 249);
     doc.rect(0, 30, W, 16, 'F');
@@ -163,23 +164,23 @@ export default function Dashboard() {
     doc.setFont('Helvetica', 'bold');
     doc.setFontSize(9);
     doc.setTextColor(22, 163, 74);
-    doc.text('PAYMENT CONFIRMED — Rs. 500.00 received successfully.', W / 2, y + 8, { align: 'center' });
+    doc.text(`PAYMENT CONFIRMED - ${amount} received successfully.`, W / 2, y + 8, { align: 'center' });
 
     y += 24;
     doc.setTextColor(148, 163, 184);
     doc.setFont('Helvetica', 'italic');
     doc.setFontSize(7.5);
     doc.text('This is a computer-generated receipt and does not require a physical signature.', W / 2, y, { align: 'center' });
-    doc.text('For queries: info@internmitra.com | 9693921517', W / 2, y + 5, { align: 'center' });
+    doc.text(`For queries: ${COMPANY.email} | ${COMPANY.phone}`, W / 2, y + 5, { align: 'center' });
 
     doc.setFillColor(30, 64, 175);
     doc.rect(0, 287, W, 10, 'F');
     doc.setTextColor(255, 255, 255);
     doc.setFont('Helvetica', 'bold');
     doc.setFontSize(7);
-    doc.text('InternMitra Technologies Pvt. Ltd.  |  Kisan Colony, Khagaul, Patna  |  CIN: U78300BR2025PTC081140', W / 2, 293, { align: 'center' });
+    doc.text(`${COMPANY.name} Pvt. Ltd.  |  ${COMPANY.address}  |  CIN: ${COMPANY.cin}`, W / 2, 293, { align: 'center' });
 
-    doc.save(`InternMitra_Payment_Slip_${name.replace(/\s+/g, '_')}.pdf`);
+    doc.save(`NexBora_Payment_Slip_${name.replace(/\s+/g, '_')}.pdf`);
   };
 
   const menuItems = [

@@ -1,690 +1,393 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
   BadgeCheck,
-  Users,
-  Clock,
-  Shield,
-  BookOpen,
   BarChart3,
-  Phone,
+  BookOpen,
+  ClipboardCheck,
+  CreditCard,
+  FileBadge,
   Mail,
   MapPin,
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Youtube,
+  Phone,
+  PlayCircle,
+  Sparkles,
+  Users,
 } from "lucide-react";
+import { COMPANY } from "../lib/constants";
 
 export default function Home() {
   const features = [
     {
-      title: "Student Registration",
-      desc: "Simple and secure registration process without document verification.",
-      icon: "📝",
+      title: "Simple Enrollment",
+      desc: "A guided registration flow for students, colleges, departments, subjects, and internship domains.",
+      icon: ClipboardCheck,
+      color: "text-sky-600 bg-sky-50 border-sky-100",
     },
     {
-      title: "Payment Integration",
-      desc: "Secure Razorpay integration for reimbursements and payments.",
-      icon: "💳",
+      title: "Secure Payments",
+      desc: "Razorpay-powered fee collection with downloadable receipts and clean payment records.",
+      icon: CreditCard,
+      color: "text-emerald-600 bg-emerald-50 border-emerald-100",
     },
     {
-      title: "Progress Tracking",
-      desc: "Track internship and learning progress in real time.",
-      icon: "📊",
+      title: "Learning Dashboard",
+      desc: "Track classes, videos, assignments, completion status, and learning hours from one place.",
+      icon: BarChart3,
+      color: "text-violet-600 bg-violet-50 border-violet-100",
     },
     {
-      title: "Assessment System",
-      desc: "Assignments and quizzes for student evaluation.",
-      icon: "📱",
+      title: "Live Training",
+      desc: "Structured mentorship, live sessions, and domain-specific practical learning support.",
+      icon: PlayCircle,
+      color: "text-rose-600 bg-rose-50 border-rose-100",
     },
     {
-      title: "Learning Management",
-      desc: "17 subjects with PPTs, videos and learning materials.",
-      icon: "🎓",
+      title: "Course Materials",
+      desc: "Organized videos, PPTs, and study resources for internship-ready technical and non-technical tracks.",
+      icon: BookOpen,
+      color: "text-amber-600 bg-amber-50 border-amber-100",
     },
     {
-      title: "Certificate Generation",
-      desc: "Automatic internship certificate generation system.",
-      icon: "🏆",
+      title: "Documents & Certificates",
+      desc: "Offer letters, receipts, certificates, and reports generated directly from student profiles.",
+      icon: FileBadge,
+      color: "text-indigo-600 bg-indigo-50 border-indigo-100",
     },
   ];
 
-  const allTestimonials = [
+  const testimonials = [
     {
       name: "Rahul Kumar",
       role: "B.Tech Student",
       type: "Student",
-      review:
-        "Internmitra helped me gain real internship experience with live projects.",
+      review: "NexBora helped me understand the complete internship workflow with live projects and clear tasks.",
     },
     {
       name: "Priya Sharma",
       role: "MBA Student",
       type: "Student",
-      review:
-        "The training sessions and internship tasks were very practical.",
+      review: "The training sessions were practical, and the dashboard made progress easy to follow.",
     },
     {
       name: "Aman Raj",
       role: "BCA Student",
       type: "Student",
-      review:
-        "Amazing platform for students and certification support.",
-    },
-    {
-      name: "Neha Singh",
-      role: "BBA Student",
-      type: "Student",
-      review:
-        "Very professional internship management system.",
-    },
-    {
-      name: "Ritesh Kumar",
-      role: "MCA Student",
-      type: "Student",
-      review:
-        "Mentorship support was excellent throughout the internship.",
-    },
-    {
-      name: "Pooja Verma",
-      role: "B.Sc Student",
-      type: "Student",
-      review:
-        "Internmitra improved my communication and technical skills.",
+      review: "A clean platform for learning, certification support, and internship documentation.",
     },
     {
       name: "Dr. Rajesh Kumar",
       role: "College Professor",
       type: "Teacher",
-      review:
-        "Very useful internship platform for colleges and students.",
+      review: "Useful for colleges that need structured internship tracking and student support.",
     },
     {
       name: "Anjali Sinha",
       role: "Training Mentor",
       type: "Teacher",
-      review:
-        "Easy dashboard and proper internship workflow system.",
-    },
-    {
-      name: "Deepak Sir",
-      role: "Faculty",
-      type: "Teacher",
-      review:
-        "Professional certification and tracking process.",
+      review: "The LMS and student workflow are simple enough for repeated academic batches.",
     },
     {
       name: "Ravi Sir",
       role: "Placement Trainer",
       type: "Teacher",
-      review:
-        "Students are getting real industry exposure.",
-    },
-    {
-      name: "Meena Ma'am",
-      role: "Mentor",
-      type: "Teacher",
-      review:
-        "Excellent support and learning management.",
-    },
-    {
-      name: "Abhishek Sir",
-      role: "Technical Trainer",
-      type: "Teacher",
-      review:
-        "One of the best internship platforms for students.",
+      review: "Students get a professional internship experience with documentation in one place.",
     },
   ];
 
   const [activeFilter, setActiveFilter] = useState("All");
-
   const filteredTestimonials =
-    activeFilter === "All"
-      ? allTestimonials
-      : allTestimonials.filter((item) => item.type === activeFilter);
+    activeFilter === "All" ? testimonials : testimonials.filter((item) => item.type === activeFilter);
 
   return (
-    <div className="bg-white overflow-hidden">
+    <div className="bg-white text-slate-950 overflow-hidden">
+      <section className="relative bg-slate-950 text-white">
+        <img
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop"
+          alt="Students and mentors collaborating in a training session"
+          className="absolute inset-0 h-full w-full object-cover opacity-35 scale-105 motion-safe:animate-[premium-zoom_18s_ease-in-out_infinite_alternate]"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(2,6,23,0.92),rgba(15,23,42,0.72),rgba(14,116,144,0.35))]" />
+        <div className="absolute inset-0 premium-grid opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-96px)] py-16 lg:py-24 flex items-center">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-sky-100 backdrop-blur"
+            >
+              <BadgeCheck className="h-4 w-4 text-emerald-300" />
+              UGC-aligned internship training platform
+            </motion.div>
 
-      {/* HERO SECTION */}
-      <section className="bg-[#071B4D] text-white pt-28 pb-20">
-        <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 }}
+              className="mt-8 text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.03]"
+            >
+              {COMPANY.name}
+              <span className="block bg-gradient-to-r from-sky-200 via-emerald-200 to-amber-100 bg-clip-text text-transparent">
+                for industry-ready internships.
+              </span>
+            </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.16 }}
+              className="mt-6 max-w-2xl text-lg leading-8 text-slate-200"
+            >
+              Manage student enrollment, live learning, payments, assignments, progress, and certification through one
+              polished academic workflow.
+            </motion.p>
 
-            <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 px-5 py-2 rounded-full mb-6">
-              <BadgeCheck className="w-4 h-4" />
-              UGC Compliant Internship Platform
-            </div>
-
-            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-              Empowering Students With
-              <span className="text-cyan-400"> Industry Skills </span>
-              & Internship Certification
-            </h1>
-
-            <p className="text-slate-300 text-lg leading-8 mb-8">
-              Complete internship management platform for students and colleges.
-              Learn with live sessions, projects, mentorship and certification.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <Link to="/register">
-                <button className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 rounded-2xl font-semibold flex items-center gap-2 hover:scale-105 transition">
-                  Register Now
-                  <ArrowRight className="w-5 h-5" />
-                </button>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.24 }}
+              className="mt-9 flex flex-col sm:flex-row gap-3"
+            >
+              <Link to="/register" className="premium-button inline-flex h-14 items-center justify-center gap-2 rounded-md bg-sky-500 px-7 py-4 font-bold text-white shadow-lg shadow-sky-950/30 transition hover:bg-sky-400">
+                Register Now
+                <ArrowRight className="h-5 w-5" />
               </Link>
-
-              <Link to="/login">
-                <button className="border border-white/20 px-8 py-4 rounded-2xl font-semibold hover:bg-white/10 transition">
-                  Login
-                </button>
+              <Link to="/features" className="inline-flex h-14 items-center justify-center gap-2 rounded-md border border-white/20 px-7 py-4 font-bold text-white transition hover:bg-white/10">
+                Explore Platform
               </Link>
+            </motion.div>
+
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                ["10K+", "Students"],
+                ["120", "Training Hours"],
+                ["13+", "Domains"],
+                ["24/7", "Support"],
+              ].map(([value, label], index) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.32 + index * 0.06 }}
+                  className="rounded-lg border border-white/10 bg-white/10 p-4 backdrop-blur transition hover:-translate-y-1 hover:border-white/25 hover:bg-white/15"
+                >
+                  <p className="text-2xl font-black">{value}</p>
+                  <p className="mt-1 text-sm text-slate-300">{label}</p>
+                </motion.div>
+              ))}
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-
-              <div className="bg-white/10 rounded-2xl p-5 text-center">
-                <h2 className="text-2xl font-bold">10000+</h2>
-                <p className="text-sm text-slate-300">Students</p>
-              </div>
-
-              <div className="bg-white/10 rounded-2xl p-5 text-center">
-                <h2 className="text-2xl font-bold">120 Hrs</h2>
-                <p className="text-sm text-slate-300">Training</p>
-              </div>
-
-              <div className="bg-white/10 rounded-2xl p-5 text-center">
-                <h2 className="text-2xl font-bold">99%</h2>
-                <p className="text-sm text-slate-300">Success</p>
-              </div>
-
-              <div className="bg-white/10 rounded-2xl p-5 text-center">
-                <h2 className="text-2xl font-bold">24/7</h2>
-                <p className="text-sm text-slate-300">Support</p>
-              </div>
-
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <div className="bg-gradient-to-br from-blue-600 to-purple-700 p-8 rounded-[40px] shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
-                alt=""
-                className="rounded-3xl h-[500px] object-cover w-full"
-              />
-            </div>
-          </motion.div>
-
+          </div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="py-24 bg-slate-50">
-
-        <div className="max-w-7xl mx-auto px-4">
-
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-5">
-              Powerful Features For
-              <span className="text-purple-600"> Internship Management </span>
-            </h2>
-
-            <p className="text-slate-600 text-lg max-w-3xl mx-auto">
-              End-to-end internship platform for colleges and students.
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-sky-600">Platform</p>
+              <h2 className="mt-3 text-3xl lg:text-5xl font-black tracking-tight">Everything needed to run internship batches.</h2>
+            </div>
+            <p className="max-w-xl text-lg leading-8 text-slate-600">
+              Built for students, colleges, mentors, and admins who need a reliable training and documentation system.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((item, index) => (
               <motion.div
-                whileHover={{ y: -8 }}
-                key={index}
-                className="bg-white rounded-3xl border p-8 shadow-sm hover:shadow-xl transition"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.05 }}
+                whileHover={{ y: -4 }}
+                key={item.title}
+                className="premium-card rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition hover:shadow-xl hover:shadow-slate-200/70"
               >
-
-                <div className="w-16 h-16 rounded-2xl bg-green-500 flex items-center justify-center text-3xl mb-6">
-                  {item.icon}
+                <div className={`mb-6 flex h-12 w-12 items-center justify-center rounded-md border ${item.color}`}>
+                  <item.icon className="h-6 w-6" />
                 </div>
-
-                <h3 className="text-2xl font-bold mb-4">
-                  {item.title}
-                </h3>
-
-                <p className="text-slate-600 leading-7">
-                  {item.desc}
-                </p>
-
+                <h3 className="text-xl font-black text-slate-950">{item.title}</h3>
+                <p className="mt-3 leading-7 text-slate-600">{item.desc}</p>
               </motion.div>
             ))}
-
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="py-24 bg-slate-50">
-
-        <div className="max-w-7xl mx-auto px-4">
-
-          <div className="text-center mb-14">
-
-            <h2 className="text-5xl font-bold mb-5">
-              What People Say About
-              <span className="text-blue-600"> Internmitra </span>
-            </h2>
-
-            <p className="text-slate-600 text-lg">
-              Trusted by students and teachers across India.
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-emerald-600">Workflow</p>
+            <h2 className="mt-3 text-3xl lg:text-5xl font-black tracking-tight">From registration to certificate, every step stays traceable.</h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">
+              NexBora keeps the internship journey organized for batches, academic teams, and students.
             </p>
-
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/register" className="inline-flex items-center gap-2 rounded-md bg-slate-950 px-6 py-3 font-bold text-white hover:bg-slate-800">
+                Start Enrollment
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link to="/contact" className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-6 py-3 font-bold text-slate-800 hover:bg-white">
+                Talk to Support
+              </Link>
+            </div>
           </div>
 
-          {/* FILTER BUTTONS */}
-          <div className="flex justify-center mb-14">
+          <motion.div
+            initial={{ opacity: 0, x: 28 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="premium-card rounded-lg border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/80"
+          >
+            {[
+              ["01", "Register", "Create a student profile with academic and domain details."],
+              ["02", "Enroll", "Complete payment and unlock the learning dashboard."],
+              ["03", "Learn", "Attend sessions, view videos, and complete assignments."],
+              ["04", "Certify", "Download offer letters, reports, receipts, and certificates."],
+            ].map(([step, title, desc], index) => (
+              <div key={title} className={`flex gap-5 p-5 ${index !== 3 ? "border-b border-slate-100" : ""}`}>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-sky-50 text-sm font-black text-sky-700">
+                  {step}
+                </div>
+                <div>
+                  <h3 className="font-black text-slate-950">{title}</h3>
+                  <p className="mt-1 text-slate-600">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-            <div className="bg-white shadow-lg rounded-full p-2 flex items-center gap-2 border border-slate-100">
-
-              {["All", "Students", "Teachers"].map((filter) => (
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Trust</p>
+              <h2 className="mt-3 text-3xl lg:text-5xl font-black tracking-tight">What students and mentors say.</h2>
+            </div>
+            <div className="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1">
+              {["All", "Student", "Teacher"].map((filter) => (
                 <button
                   key={filter}
-                  onClick={() => setActiveFilter(filter === "Students" ? "Student" : filter === "Teachers" ? "Teacher" : "All")}
-                  className={`px-8 py-3 rounded-full font-semibold text-sm transition ${(filter === "All" && activeFilter === "All") ||
-                    (filter === "Students" && activeFilter === "Student") ||
-                    (filter === "Teachers" && activeFilter === "Teacher")
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "text-slate-600 hover:bg-slate-100"
-                    }`}
+                  onClick={() => setActiveFilter(filter)}
+                  className={`rounded-md px-5 py-2 text-sm font-bold transition ${
+                    activeFilter === filter ? "bg-white text-slate-950 shadow-sm" : "text-slate-500 hover:text-slate-900"
+                  }`}
                 >
-                  {filter}
+                  {filter === "All" ? "All" : `${filter}s`}
                 </button>
               ))}
-
             </div>
-
           </div>
 
-          {/* TESTIMONIAL GRID */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredTestimonials.map((item, index) => (
-
               <motion.div
-                key={index}
-                whileHover={{ y: -8 }}
-                className="bg-white rounded-[30px] p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all duration-300"
+                key={item.name}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.04 }}
+                whileHover={{ y: -4 }}
+                className="premium-card rounded-lg border border-slate-200 bg-white p-7 shadow-sm"
               >
-
-                {/* STARS */}
-                <div className="flex gap-1 mb-5 text-yellow-400 text-xl">
-                  ★★★★★
+                <div className="flex gap-1 text-amber-400" aria-label="Five star rating">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Sparkles key={star} className="h-4 w-4 fill-current" />
+                  ))}
                 </div>
-
-                {/* REVIEW */}
-                <p className="text-slate-600 leading-8 mb-8 text-lg">
-                  "{item.review}"
-                </p>
-
-                {/* USER */}
-                <div className="flex items-center justify-between">
-
-                  <div className="flex items-center gap-4">
-
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                <p className="mt-5 leading-7 text-slate-700">"{item.review}"</p>
+                <div className="mt-7 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-md bg-slate-950 font-black text-white">
                       {item.name.charAt(0)}
                     </div>
-
                     <div>
-
-                      <h4 className="font-bold text-lg text-slate-900">
-                        {item.name}
-                      </h4>
-
-                      <p className="text-slate-500">
-                        {item.role}
-                      </p>
-
+                      <h3 className="font-black">{item.name}</h3>
+                      <p className="text-sm text-slate-500">{item.role}</p>
                     </div>
-
                   </div>
-
-                  <span className={`px-4 py-1 rounded-full text-xs font-semibold ${item.type === "Student"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-blue-100 text-blue-700"
-                    }`}>
-                    {item.type}
-                  </span>
-
+                  <span className="rounded-md bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{item.type}</span>
                 </div>
-
               </motion.div>
-
             ))}
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* INTERNSHIP FLOW */}
-      <section className="py-24 bg-[#071B4D] text-white">
-
-        <div className="max-w-7xl mx-auto px-4">
-
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-5">
-              From Registration To Certification
-            </h2>
-
-            <p className="text-slate-300 text-lg">
-              Structured internship journey for every student.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {[
-              "Quick Registration",
-              "Payment & Enrollment",
-              "Access Training",
-              "Live Sessions",
-              "Assessments",
-              "Certificate Generation",
-            ].map((step, index) => (
-
-              <div
-                key={index}
-                className="bg-white/5 border border-white/10 rounded-3xl p-8"
-              >
-
-                <div className="flex justify-between items-center mb-5">
-                  <span className="text-cyan-400 font-semibold">
-                    STEP {index + 1}
-                  </span>
-
-                  <span className="bg-white/10 px-4 py-1 rounded-full text-sm">
-                    ACTIVE
-                  </span>
-                </div>
-
-                <h3 className="text-2xl font-bold mb-4">
-                  {step}
-                </h3>
-
-                <ul className="space-y-3 text-slate-300">
-                  <li>✔ Live Classes</li>
-                  <li>✔ Study Materials</li>
-                  <li>✔ Internship Tasks</li>
-                  <li>✔ Certification</li>
-                </ul>
-
-              </div>
-
-            ))}
-
           </div>
         </div>
       </section>
 
-      {/* TECHNOLOGY */}
-      <section className="py-24 bg-[#031131] text-white">
-
-        <div className="max-w-7xl mx-auto px-4">
-
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4">
-              Enterprise Grade Technology
-            </h2>
-
-            <p className="text-slate-300">
-              Powerful infrastructure for large-scale internship management.
-            </p>
+      <section className="bg-slate-950 py-16 text-white">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+          <div className="absolute inset-x-4 -top-16 h-px bg-gradient-to-r from-transparent via-sky-300/60 to-transparent" />
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-sky-300">Support</p>
+            <h2 className="mt-3 text-3xl lg:text-5xl font-black tracking-tight">Need help with enrollment or certification?</h2>
+            <p className="mt-4 text-slate-300">Our support team can help students, colleges, and mentors move quickly.</p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {[
-              {
-                icon: <Users />,
-                title: "500K+ Concurrent Users",
-              },
-              {
-                icon: <Clock />,
-                title: "Ultra Low Latency",
-              },
-              {
-                icon: <Shield />,
-                title: "Advanced Security",
-              },
-              {
-                icon: <BookOpen />,
-                title: "Real-time Learning",
-              },
-              {
-                icon: <BarChart3 />,
-                title: "Advanced Analytics",
-              },
-              {
-                icon: <Shield />,
-                title: "99.99% Uptime",
-              },
-            ].map((item, index) => (
-
-              <div
-                key={index}
-                className="bg-white/5 border border-white/10 rounded-3xl p-8"
-              >
-
-                <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-6">
-                  {item.icon}
-                </div>
-
-                <h3 className="text-2xl font-bold">
-                  {item.title}
-                </h3>
-
-              </div>
-
-            ))}
-
+          <div className="grid sm:grid-cols-2 gap-3">
+            <a href={`mailto:${COMPANY.email}`} className="rounded-lg border border-white/10 bg-white/10 p-5 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15">
+              <Mail className="h-5 w-5 text-sky-300" />
+              <p className="mt-3 font-bold">{COMPANY.email}</p>
+            </a>
+            <a href={COMPANY.phoneHref} className="rounded-lg border border-white/10 bg-white/10 p-5 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15">
+              <Phone className="h-5 w-5 text-emerald-300" />
+              <p className="mt-3 font-bold">{COMPANY.phone}</p>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* SUPPORT */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-
-        <div className="max-w-5xl mx-auto text-center px-4">
-
-          <h2 className="text-5xl font-bold mb-4">
-            24/7 Student Support
-          </h2>
-
-          <p className="text-lg text-blue-100 mb-10">
-            Dedicated support team available anytime.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-8">
-
-            <div className="flex items-center gap-3">
-              <Mail />
-              info@internmitra.com
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Phone />
-              +91 9693921517
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="bg-[#07142E] text-white pt-20 pb-10">
-
-        <div className="max-w-7xl mx-auto px-4">
-
-          <div className="grid lg:grid-cols-5 gap-10 mb-16">
-
-            <div className="lg:col-span-2">
-
-              <div className="flex items-center gap-3 mb-6">
-
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold">
-                  I
-                </div>
-
+      <footer className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-md bg-slate-950 text-lg font-black text-white">N</div>
                 <div>
-                  <h2 className="text-3xl font-bold">
-                    Internmitra
-                  </h2>
-
-                  <p className="text-slate-400 text-sm">
-                    Empowering Students
-                  </p>
+                  <h2 className="text-2xl font-black">{COMPANY.shortName}</h2>
+                  <p className="text-sm text-slate-500">Technologies</p>
                 </div>
-
               </div>
-
-              <p className="text-slate-300 leading-8 mb-8">
-                Internship platform helping students across India gain
-                practical skills and certification.
+              <p className="mt-5 max-w-md leading-7 text-slate-600">
+                Internship training, LMS workflows, payment records, and certificates for academic programs.
               </p>
-
-              <div className="flex gap-4 mb-8">
-
-                {[Facebook, Instagram, Twitter, Linkedin, Youtube].map(
-                  (Icon, index) => (
-
-                    <div
-                      key={index}
-                      className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center hover:bg-blue-600 transition cursor-pointer"
-                    >
-                      <Icon className="w-5 h-5" />
-                    </div>
-
-                  )
-                )}
-
-              </div>
-
-              <div className="space-y-4 text-slate-300">
-
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-cyan-400" />
-                  info@internmitra.com
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-cyan-400" />
-                  +91 9693921517
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-cyan-400 mt-1" />
-                  Patna,Bihar, India
-                </div>
-
-              </div>
-
             </div>
 
             <div>
-              <h3 className="text-xl font-bold mb-6">
-                Platform
-              </h3>
-
-              <ul className="space-y-4 text-slate-300">
-                <li>
-                  <Link
-                    to="/features"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    Features
-                  </Link>
-                </li>
-                <li>Pricing</li>
-                <li>For Students</li>
-                <li>For Colleges</li>
+              <h3 className="font-black">Platform</h3>
+              <ul className="mt-4 space-y-3 text-slate-600">
+                <li><Link to="/features" className="hover:text-slate-950">Features</Link></li>
+                <li><Link to="/register" className="hover:text-slate-950">For Students</Link></li>
+                <li><Link to="/contact" className="hover:text-slate-950">For Colleges</Link></li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-bold mb-6">
-                Support
-              </h3>
-
-              <ul className="space-y-4 text-slate-300">
-                <li>FAQs</li>
-                <li>
-                  <Link
-                    to="/about"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contact"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    Contact us
-                  </Link>
-                </li>
+              <h3 className="font-black">Support</h3>
+              <ul className="mt-4 space-y-3 text-slate-600">
+                <li><Link to="/about" className="hover:text-slate-950">About</Link></li>
+                <li><Link to="/contact" className="hover:text-slate-950">Contact</Link></li>
                 <li>Certificates</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-bold mb-6">
-                Legal
-              </h3>
-
-              <ul className="space-y-4 text-slate-300">
-                <li>Privacy Policy</li>
-                <li>Terms & Conditions</li>
-                <li>Refund Policy</li>
-                <li>Cookie Policy</li>
-              </ul>
+              <h3 className="font-black">Contact</h3>
+              <div className="mt-4 space-y-3 text-slate-600">
+                <p className="flex items-center gap-2"><Mail className="h-4 w-4" /> {COMPANY.email}</p>
+                <p className="flex items-center gap-2"><Phone className="h-4 w-4" /> {COMPANY.phone}</p>
+                <p className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {COMPANY.address}</p>
+              </div>
             </div>
-
           </div>
 
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400">
-
-            <p>
-              © 2026 Internmitra. All rights reserved.
-            </p>
-
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              20,000+ Students
-            </div>
-
+          <div className="mt-10 flex flex-col gap-3 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2026 {COMPANY.name}. All rights reserved.</p>
+            <p className="flex items-center gap-2"><Users className="h-4 w-4" /> 20,000+ students supported</p>
           </div>
-
         </div>
       </footer>
-
     </div>
   );
 }

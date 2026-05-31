@@ -4,6 +4,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { UserProfile } from '../types';
 import { handleFirestoreError, OperationType } from '../lib/firebase';
+import { isAdminEmail } from '../lib/admin';
 
 interface AdminProfile {
   email: string;
@@ -35,6 +36,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       if (user) {
+        if (isAdminEmail(user.email)) {
+          setAdminProfile({
+            email: user.email || '',
+            password: '',
+            role: 'super_admin',
+            fullName: 'System Administrator',
+            createdAt: new Date().toISOString(),
+            isActive: true
+          });
+          setProfile(null);
+          setIsAdmin(true);
+          setLoading(false);
+          return;
+        }
+
         // First check if user exists in users collection
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         
@@ -55,29 +71,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           });
           return () => unsubscribeProfile();
         } else {
-          // Not in users collection - check if admin by email first (faster)
-          if (user.email === 'admin@internmitra.com') {
-            setAdminProfile({
-              email: user.email,
-              password: '',
-              role: 'super_admin',
-              fullName: 'System Administrator',
-              createdAt: new Date().toISOString(),
-              isActive: true
-            });
+          // Check Firestore admin document
+          const adminDoc = await getDoc(doc(db, 'admins', 'admin_001'));
+          if (adminDoc.exists() && adminDoc.data().email === user.email) {
+            setAdminProfile(adminDoc.data() as AdminProfile);
             setProfile(null);
             setIsAdmin(true);
           } else {
-            // Check Firestore admin document
-            const adminDoc = await getDoc(doc(db, 'admins', 'admin_001'));
-            if (adminDoc.exists() && adminDoc.data().email === user.email) {
-              setAdminProfile(adminDoc.data() as AdminProfile);
-              setProfile(null);
-              setIsAdmin(true);
-            } else {
-              setAdminProfile(null);
-              setIsAdmin(false);
-            }
+            setAdminProfile(null);
+            setIsAdmin(false);
           }
           setLoading(false);
         }

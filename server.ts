@@ -14,8 +14,8 @@ app.use(express.json());
 
 // Razorpay Initialization
 // Safety check for keys
-const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || "rzp_live_SoVxB05ogtK0Fl";
-const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || "23a2eaU3UwRf4LnZaBWVvpvr";
+const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || "rzp_live_Sw1G5ZIqKYnEmY";
+const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || "WOXrKl7pLl64Vl4Zys3yYpAU";
 
 const razorpay = new Razorpay({
   key_id: RAZORPAY_KEY_ID,

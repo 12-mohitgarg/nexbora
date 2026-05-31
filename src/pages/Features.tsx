@@ -6,7 +6,7 @@ export default function Features() {
   const coreFeatures = [
     {
       title: 'LMS (Learning Management System)',
-      desc: 'Access video lectures, PPTs, and interactive study materials for 17 specialized subjects.',
+      desc: 'Access video lectures, PPTs, and interactive study materials for specialized internship subjects.',
       icon: LayoutDashboard
     },
     {
@@ -46,7 +46,7 @@ export default function Features() {
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl lg:text-7xl font-black text-slate-900 mb-10 tracking-tighter uppercase italic leading-[1.05]"
           >
-            Sovereign Architecture <br/> <span className="text-blue-600">for Modern Interns.</span>
+            Modern Architecture <br/> <span className="text-blue-600">for Internship Programs.</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -54,7 +54,7 @@ export default function Features() {
             transition={{ delay: 0.1 }}
             className="text-2xl text-slate-500 leading-relaxed italic font-bold max-w-3xl mx-auto"
           >
-            InternMitra provides a premium suite of tools designed to transform your academic baseline into professional superiority.
+            NexBora provides a focused suite of tools for learning, tracking, documentation, and certification.
           </motion.p>
         </div>
 
@@ -85,7 +85,7 @@ export default function Features() {
                  <h3 className="text-[10px] text-blue-600 font-black uppercase tracking-[0.4em] mb-4 italic">Technical Ecosystem</h3>
                  <h2 className="text-4xl lg:text-6xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">Specialized <br/> Industry Nodes.</h2>
                </div>
-               <p className="text-xl text-slate-400 font-bold italic max-w-sm">Choose from our massive registry of 17+ industrial specializations curated for global dominance.</p>
+               <p className="text-xl text-slate-400 font-bold italic max-w-sm">Choose from a practical registry of internship specializations curated for academic and industry readiness.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

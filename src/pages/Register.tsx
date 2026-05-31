@@ -248,7 +248,7 @@ export default function Register() {
             </div>
           </div>
           <div className="mt-12 text-[10px] text-slate-500 font-black uppercase tracking-widest relative z-10">
-            © 2026 INTERNMITRA. UGC Compliant Platform.
+            © 2026 NEXBORA. UGC Compliant Platform.
           </div>
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl" />

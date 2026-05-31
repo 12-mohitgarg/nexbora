@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'motion/react';
 import { Handshake, Target, Users, Award, ShieldCheck, Zap } from 'lucide-react';
 
@@ -27,7 +26,7 @@ export default function About() {
             transition={{ delay: 0.1 }}
             className="text-2xl text-slate-500 leading-relaxed italic font-bold max-w-3xl mx-auto"
           >
-            INTERNMITRA is a premium educational platform dedicated to empowering students with certified internship programs and industry-recognized skill sets.
+            NexBora Technologies is an educational platform dedicated to empowering students with certified internship programs and industry-recognized skill sets.
           </motion.p>
         </div>
 

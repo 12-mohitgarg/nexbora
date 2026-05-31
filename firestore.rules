@@ -1,67 +1,75 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Default deny
+    // --- Global Safety Net ---
     match /{document=**} {
       allow read, write: if false;
     }
 
     // --- Helpers ---
     function isSignedIn() { return request.auth != null; }
-    function isAdmin() { 
+      function isAdmin() { 
       return isSignedIn() && 
-        (request.auth.token.get('email', '').lower() == "mrmunsi2014@gmail.com" ||
-         request.auth.token.get('email', '').lower() == "admin@internmitra.com");
+        (request.auth.token.get('email', '').lower() == "gargmohit8306@gmail.com" ||
+         request.auth.token.get('email', '').lower() == "admin@nexboratechnologies.com");
     }
-    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
-    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
-    function incoming() { return request.resource.data; }
-    function existing() { return resource.data; }
-    
-    function isValidUser(data) {
-      return data.keys().hasAll(['uid', 'fullName', 'email', 'isPaid']) &&
-             data.uid is string && data.fullName is string && data.fullName.size() <= 200 &&
-             data.email is string && data.email.size() <= 200 &&
-             data.isPaid is bool &&
-             data.uid == request.auth.uid;
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
     }
-
-    function isValidPayment(data) {
-      return data.keys().hasAll(['userId', 'razorpayPaymentId', 'amount']) &&
-             data.userId == request.auth.uid &&
-             (data.amount == 700 || data.amount == 1000) &&
-             data.razorpayPaymentId is string;
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
     }
 
     // --- Collection Rules ---
 
-    match /users/{userId} {
-      allow read: if isOwner(userId) || isAdmin();
-      allow create: if isSignedIn() && isValidId(userId) && isValidUser(incoming());
-      allow update: if isOwner(userId) && isValidUser(incoming()) && (
-        incoming().diff(existing()).affectedKeys().hasOnly(['fullName', 'gender', 'parentName', 'contactNumber', 'district', 'college', 'degree', 'department', 'subject', 'session', 'semester', 'universityRoll', 'internshipDomain', 'learningHours', 'progress', 'isPaid', 'offerLetterNumber'])
-      );
-    }
+  match /users/{userId} {
+
+  // Single user read
+  allow get: if isValidId(userId) &&
+              isSignedIn() &&
+              (request.auth.uid == userId || isAdmin());
+
+  // Query/search allow for certificate verification
+  allow list: if isSignedIn();
+
+  // Create own profile
+  allow create: if isSignedIn() &&
+                 request.auth.uid == userId;
+
+  // Update own profile or admin
+  allow update: if isSignedIn() &&
+                 (request.auth.uid == userId || isAdmin());
+}
 
     match /payments/{paymentId} {
-      allow get: if isSignedIn() && existing().userId == request.auth.uid;
+      // Admins manage the verification queue
+      allow read, write: if isAdmin();
+      
+      // Users can create a payment record for themselves
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      
+      // Users can read/list their own payment records (for payment status tracking)
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
       allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
-      allow create: if isSignedIn() && isValidId(paymentId) && isValidPayment(incoming());
+    }
+
+    match /settings/{settingId} {
+      // Settings (like Offer Letter templates) are public for reading
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     match /submissions/{submissionId} {
-      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid);
-      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid);
-      allow create: if isSignedIn() && isValidId(submissionId) && incoming().userId == request.auth.uid;
-      allow update: if isSignedIn() && existing().userId == request.auth.uid && incoming().userId == request.auth.uid;
+      // Generic submissions collection (used for assignments/labs)
+      allow read: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
     }
-
-    match /admins/{adminId} {
+     match /admins/{adminId} {
       allow read: if isAdmin();
     }
-
-    // Master data collections - public read, admin write
-    match /districts/{docId} {
+     match /districts/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
@@ -71,33 +79,37 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    match /universities/{docId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
     match /courses/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
-
-    match /degrees/{docId} {
+      match /universities/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
-
-    match /counters/{docId} {
+    
+     match /degrees/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+   match /counters/{docId} {
       allow read: if true;
       allow write: if isSignedIn();
     }
-
-    match /dailyVideos/{docId} {
+    
+      match /dailyVideos/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
-
-    match /userVideoProgress/{docId} {
+    
+    
+  match /userVideoProgress/{docId} {
       allow read, write: if isSignedIn();
+    }
+    // Internal connection test path
+    match /_connection_test/{docId} {
+      allow get: if true;
     }
   }
 }

@@ -54,7 +54,7 @@ export default function Certifications() {
       doc.text(`Issued: ${new Date().toLocaleDateString()}`, 148, 165, { align: 'center' });
       doc.text('UGC & Industry Optimized Verification Platform', 148, 175, { align: 'center' });
       
-      doc.save('INTERNMITRA_Official_Certificate.pdf');
+      doc.save('NEXBORA_Official_Certificate.pdf');
     }
   };
 

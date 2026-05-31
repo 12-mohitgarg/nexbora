@@ -150,7 +150,7 @@ export default function OfferLetter() {
     // Dear Candidate + body paragraph
     doc.setFont('Helvetica', 'normal');
     doc.text('Dear Candidate,', x, y); y += 6;
-    const bodyText = `We are pleased to accept your application and formally offer you an internship at Internmitra Technologies Private Limited(InternMitra). Our internship programmes are designed in full alignment with NEP-2020, AICTE and UGC Internship Guidelines, and your university's specific internship framework.`;
+    const bodyText = `We are pleased to accept your application and formally offer you an internship at NexBora Technologies Private Limited(NexBora). Our internship programmes are designed in full alignment with NEP-2020, AICTE and UGC Internship Guidelines, and your university's specific internship framework.`;
     const splitBody = doc.splitTextToSize(bodyText, W - 2 * ML);
     doc.text(splitBody, x, y); y += splitBody.length * 4.6 + 7;
 
@@ -188,14 +188,14 @@ export default function OfferLetter() {
     const splitClose = doc.splitTextToSize(closing, W - 2 * ML);
     doc.text(splitClose, x, y); y += splitClose.length * 4.6 + 5;
 
-    const lastLine = `We look forward to a meaningful and enriching internship experience and appreciate your interest in InternMitra.`;
+    const lastLine = `We look forward to a meaningful and enriching internship experience and appreciate your interest in NexBora.`;
     const splitLast = doc.splitTextToSize(lastLine, W - 2 * ML);
     doc.text(splitLast, x, y);
 
     // ── FOOTER IMAGE ──────────────────────────────────────────────
     doc.addImage(footerImg, 'PNG', 0, H - footerH, W, footerH);
 
-    doc.save(`InternMitra_Offer_Letter_${studentName.replace(/\s+/g, '_')}.pdf`);
+    doc.save(`NexBora_Offer_Letter_${studentName.replace(/\s+/g, '_')}.pdf`);
   };
 
 

@@ -69,10 +69,10 @@ export default function Payment() {
 
     try {
       const options = {
-        key: "rzp_live_SoVxB05ogtK0Fl",
+        key: "rzp_live_Sw1G5ZIqKYnEmY",
         amount: amount * 100,
         currency: 'INR',
-        name: 'INTERNMITRA',
+        name: 'NEXBORA',
         description: 'Internship Registration Fee',
         handler: async function (response: any) {
           console.log('Payment received:', response.razorpay_payment_id);

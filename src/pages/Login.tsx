@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth, db } from '../lib/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { auth } from '../lib/firebase';
+import { AuthError, signInWithEmailAndPassword } from 'firebase/auth';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
+import { isAdminEmail } from '../lib/admin';
+import { useAuth } from '../components/AuthContext';
 import { motion } from 'motion/react';
 import { GraduationCap, ArrowRight, Lock, Mail, AlertCircle, Handshake } from 'lucide-react';
+
+function getLoginErrorMessage(error: AuthError) {
+  switch (error.code) {
+    case 'auth/invalid-credential':
+    case 'auth/user-not-found':
+    case 'auth/wrong-password':
+      return 'No account found for this email/password in the current Firebase project.';
+    case 'auth/operation-not-allowed':
+      return 'Email/password login is not enabled in Firebase Authentication.';
+    case 'auth/invalid-email':
+      return 'Please enter a valid email address.';
+    case 'auth/api-key-not-valid':
+      return 'Firebase API key is not valid. Check firebase-applet-config.json.';
+    case 'auth/network-request-failed':
+      return 'Network error while contacting Firebase. Please try again.';
+    default:
+      return `Login failed: ${error.code}`;
+  }
+}
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -15,28 +35,23 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user: currentUser, isAdmin, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (authLoading || !currentUser) return;
+
+    navigate(isAdmin || isAdminEmail(currentUser.email) ? '/admin-dashboard' : '/dashboard', { replace: true });
+  }, [authLoading, currentUser, isAdmin, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      // Firebase Auth login
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Check if user exists in users collection
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      
-      if (userDoc.exists()) {
-        // Regular user - navigate to dashboard
-        navigate('/dashboard');
-      } else {
-        // Not in users collection - assume admin (will be verified in AuthContext)
-        navigate('/admin-dashboard');
-      }
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
-      setError("Invalid credentials. Please try again.");
+      console.error('Firebase login error:', err.code, err.message);
+      setError(getLoginErrorMessage(err));
     } finally {
       setLoading(false);
     }
