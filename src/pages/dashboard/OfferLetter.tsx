@@ -168,9 +168,9 @@ export default function OfferLetter() {
       ['Internship Domain', profile?.internshipDomain ? domain : `[${domain}]`],
       ['Internship Duration', '120 Hours'],
       ['Mode of Internship', 'Online (as approved by College)'],
-      ['Internship Start Date', '01/06/2026'],
-      ['Expected End Date', '20/06/2026'],
-      ['Stipend', 'Not Applicable \u2014 Academic Programme'],
+      ['Internship Start Date', '01/05/2026'],
+      ['Expected End Date', '30/05/2026'],
+      ['Stipend', 'Not Applicable \u2014 Academic Programmer'],
     ];
     rows.forEach(([label, value]) => {
       doc.setFont('Helvetica', 'normal'); doc.setTextColor(20, 20, 20);
